@@ -32,8 +32,6 @@ class Child3 : Parent2 {
     }
 }
 
-val test1: Child3 = Child3(50)//매개변수가 없는 부모 생성자 호출
-
 open class Parent {
     private var name: String = ""
 }
