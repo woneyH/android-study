@@ -171,3 +171,38 @@ onPause -> onStop -> onDestroy -> onCreate  기존 액티비티가 죽고 다시
 - **안정성** : 앱이 갑자기 꺼지지 않음
 - **성능** : 사용하지 않는 리소슬르 제때 반납하여 폰이 느려지지 않습니다.
 - **연속성** : 화면을 돌리거나 다른 앱을 다녀와도 사용하던 데이터가 유지됩니다.
+
+
+---
+
+
+## 4. 학습한 XML 태그들
+
+1. TextView
+2. ImageView
+3. CheckBox, RadioGroup, Radio
+4. EditText
+
+### 4-1  TextView 속성
+
+- autoLink 속성 : android:autoLink = "web|email|phone" 이런식으로 특정 형태의 문자열에 자동 링크를 추가해준다.
+- maxLines 속성 : 특정 줄까지만 나오도록합니다.
+- ellipsize 속성 : 속성값(end, middle, start)로 출력되지 않은 긴 문자열이 더 있다는 것을 표시하는 속성입니다(...)
+
+### 4-2 ImageView 속성
+
+- maxWidth 속성 : 이미지의 최대 너비
+- maxHeight 속성 : 이미지의 최대 높이
+- adjustViewBounds 속성 : 이미지의 가로세로 길이와 비례해 뷰의 크기를 맞춥니다. maxWidth와 maxHeight는 adjustViewBounds=true일 때만 동작합니다.
+
+### 4-3 RadioGroup 속성
+라디오버튼은 라디오 그룹안에 속한 라디오 버튼 중 단일 선택됩니다.
+
+
+### 4-4 EditText 속성
+
+- lines 속성 :  속성값만큼 입력 줄 크기로 화면에 나옵니다. 초과하면 자동으로 스크롤 발생
+- maxLines 속성 : 처음에는 1줄로 보이지만 속성값만큼 줄이 늘어날 수 있습니다. 초과하면 자동으로 스크롤 발생
+- inputType 속성 : 올라오는 키보드를 지정하는 속성입니다. 예를 들어 전화번호만 입력하게 하려면 andoird:inputType = "phone"
+
+ 
