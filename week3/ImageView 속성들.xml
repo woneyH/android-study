@@ -1,0 +1,32 @@
+<!--
+    ImageView 태그입니다.
+
+    속성
+    1. android:src 속성 : 리소스 이미지, 파일 이미지, 네트워크 이미지등을 출력
+    2. maxWidth, maxHeight, adjustViewBounds : 원본 이미지 비율을 유지하면서 크기 제한 속성들
+                                               해당 3가지 속성의 조합으로 기능을 구현한다.
+                                               adjustViewBounds의 속성값을 true로 하면, 이미지가 들어갈 때 원본 비율에 맞춰
+                                               자체의 크기(Bounds)가 늘어나거나 줄어든다.
+                                               
+                                               maxWidth와 maxHeight는 ImageView가 가질 수 있는 최대 너비와 높이를 지정합니다.
+    
+    adjustViewBounds가 true여야 maxWidth와 maxHeight 속성이 작동됩니다.
+    
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:background="#0000ff"
+        android:maxWidth="100dp"
+        android:maxHeight="200dp"
+        android:src="@drawable/ic_launcher_foreground" />
+
+
+</LinearLayout>
