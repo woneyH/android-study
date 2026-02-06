@@ -4,7 +4,7 @@
 ## 학습 목표
 - [X] 뷰 바인딩, inflate(), 바인딩 생략
 - [ ] companion object
-- [ ] 안드로이드 프로젝트 구조 자세히 학습하기
+- [X] 안드로이드 프로젝트 구조 자세히 학습하기
 
 ---
 
@@ -52,5 +52,45 @@ https://github.com/woneyH/android-study/tree/main/week4/%EB%B7%B0%20%EB%B0%94%EC
 
 안드로이드 프로젝트는 크게 **애플리케이션 소스 코드**와 **빌드 설정(Gradle Scripts)** 두 부분으로 나뉩니다.
 
+안드로이드 프로젝트는 단순히 파일들이 모여 있는 것이 아니라, 빌드 시스템, 리소스 관리, 소스 코드 그리고 앱의 권한 및 구성을 정의하는 매니페스트가 유기적으로 결합된 구조입니다.
+
+### 2-1 Manifests (AndroidManifest.xml)
+
+앱의 신분증이자 구성 명세서입니다. 안드로이드 시스템이 앱을 실행하기 전에 반드시 읽어야 하는 정보들이 담겨 있습니다.
+
+- **앱의 식별 정보**: 패키지 이름을 통해 구글 플레이 스토어 및 기기 내에서 앱을 고유하게 식별합니다.
+- **권한 관리**: 인터넷 사용, 카메라 접근, 위치 정보 등 민감한 기능에 대한 사용 권한을 선언합니다.
+- **4대 컴포넌트 등록** : Activity, Service, Broadcast Receiver, Content Provider는 이곳에 등록되지 않으면 실행될 수 없습니다.  MAIN 액티비티가 여기서 지정됩니다.
 
 
+### 2-2 Source Code
+
+실제 비즈니스 로직이 담긴 파일들이 위치하는 곳입니다.
+
+- **패키지 구조**: com.example.projectname 과 같은 패키지명 아래 코드를 위치합니다.
+- **구조화** : 실무에서 이 패키지 내부를 기능별, 레이어별로 나누어 MVVM이나 Clean Architecture 패턴을 적용하여 관리합니다.
+- **Generrated Files**: ViewBinding이나 Room Database 등을 사용할 때 컴파일러가 자동 생성한 코드들도 이 영역의 빌드 경로에 포함됩니다.
+
+### 2-3 res  (Resources)
+
+코드를 제외한 정적 콘텐츠(이미지, 레이아웃, 문자열 등)를 관리합니다.
+
+- **layout/** : XML 기반 UI 설계도
+- **drawable/** : 비트맵 이미지, 벡터 이미지가 저장됩니다.
+- **mipmap/** : 주로 앱 런처 아이콘 관리합니다.
+- **values/** : strings.xml, colors.xml, themes.xml, styles.xml 이 존재합니다.
+
+### 2-4 Gradle Scripts (Build System)
+
+안드로이드 빌드 자동화 도구인 Gradle 설정 파일입니다.
+
+- **build.gradle.kts (Project Level)** : 프로젝트 전체에 적용되는 공통 설정입니다.(코틀린 버전, 플러그인 버전 등)
+- **build.gradle.kts (Module:app)** : 실제 앱 모듈에 대한 상세 설정입니다. 가장 자주 수정하게 되는 파일입니다.
+
+
+### 📝 프로젝트 구조 결론
+
+안드로이드 프로젝트 구조의 핵심은 **관심사 분리**입니다. 
+로직은 소스코드 파일로 UI 구성은 res/layout으로  상수 값들은 res/values 로 
+
+철저히 분리되어 있어 유지보수가 높습니다.
