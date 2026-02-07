@@ -41,9 +41,20 @@ android {
 #### ex)  XML 파일명 : item_main.xml  ->  자동으로 만들어진 클래스 이름 : ItemMainBinding.class
 
 
+
+### findViewById와의 차이점
+
+- **null 안전** : 뷰 바인딩은 뷰에 대한 직접 참조를 생성하므로 잘못된 뷰 ID로 인해 null 포인터 예외가 발생할 위험이 없습니다.
+- **유형 안전** : 각 바인딩 클래스의 필드 유형이 XML 파일에서 참조하는 뷰와 일치합니다.
+
+가장 큰 차이는 런타임이 아닌 컴파일 시간에 빌드가 실패하게 된다는 것 입니다.
+
+
 ###### 뷰 바인딩의 간단한 코드 예시는 아래 링크를 참고하세요.
 
 https://github.com/woneyH/android-study/tree/main/week4/%EB%B7%B0%20%EB%B0%94%EC%9D%B8%EB%94%A9
+
+
 
 
 ---
