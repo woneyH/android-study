@@ -3,7 +3,7 @@
 ---
 ## 학습 목표
 - [X] 뷰 바인딩, inflate(), 바인딩 생략
-- [ ] companion object
+- [X] companion object
 - [X] 안드로이드 프로젝트 구조 자세히 학습하기
 
 ---
@@ -105,3 +105,63 @@ https://github.com/woneyH/android-study/tree/main/week4/%EB%B7%B0%20%EB%B0%94%EC
 로직은 소스코드 파일로 UI 구성은 res/layout으로  상수 값들은 res/values 로 
 
 철저히 분리되어 있어 유지보수가 높습니다.
+
+
+---
+
+## 3. object와 companion object 
+
+### 3-1 object 선언
+
+object는 static class와 유사합니다.
+
+싱글톤 패턴을 구현하는데 Kotlin의 간결한 방법중 하나입니다. object로 선언하면 클래스 정의와 동시에 단 하나의 인스턴스가 자동으로 생성돕니다.
+
+```kolin
+
+object DatabaseManager {
+   var connectionCount = 0
+
+   fun connect() {
+      connectionCount++
+      println("연결중!! Total connections : $connectionCount")
+   }
+}
+
+DatabaseManager.connect()  //인스턴스 생성 없이 바로 접근해서 사용함
+
+
+```
+
+
+DatabaseManager는 애플리케이션 전체에서 단 하나만 존재합니다. 첫 번째 접근 시점에 지연 초기화가 됩니다. thread-safe하게 구현되어 있어서 멀티스레드 환경에서도 안전합니다.
+
+object는 인터페이슬르 구현하거나 클래스를 상속 받을 수 있습니다.
+
+
+### 3-2 companion object
+
+companion object는 클래스 내부에서 선언하는 동반 객체입니다.
+Java의 static 멤버와 유사한 역할을 하지만 기능적으로 더 강력합니다.
+
+companion obejct는 실제 객체이기 때문에 인터페이스 구현이나 확장 함수 정의가 가능합니다.
+
+```kotlin
+class User private constructor(val name: String, val age: Int) {
+    companion object Factory {
+        fun create(name: String, age: Int) : User? {
+            return if (age>=0) {
+                User(name, age)
+            }else {
+                null
+            }
+        }
+    }
+}
+
+val user = User.create("kwh",0)
+```
+
+companion object의 이름 (위 예시 "Factory")는 생략할 수 있습니다. 생략하면 기본 이름인 "Companion"이 사용됩니다.
+
+
