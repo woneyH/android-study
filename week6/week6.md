@@ -67,3 +67,36 @@ MotionEvent 객체에서는 이벤트가 발생한 지점의 좌푯값을 얻을
 x 와 rawX 모두 좌푯값이지만 의미하는 바는 다릅니다.
 x는 터치 이벤트가 발생한 **뷰**에서의 x 값이고
 rawX는 스크린, 즉 화면에서의 x 값입니다.
+
+<br>
+특정 뷰에서 setOnTouchListener 함수를 사용하면 x 값과 rawX 값의 차이를 알 수 있습니다.
+
+```kotlin
+package com.example.androidpractice
+
+import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import androidx.appcompat.app.AppCompatActivity
+import com.example.androidpractice.databinding.TestEx6Binding
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = TestEx6Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.imageView2.setOnTouchListener { view, event ->
+            when(event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    Log.d("move", "x = ${event.x}  rawx = ${event.rawX}")
+                }
+            }
+            true
+        }
+    }
+}
+
+```
+
+결론은 x, y는 특정 뷰를 기준에서의 좌표 값  rawX, rawY는 화면 전체 기준에서 눌린 좌표값입니다.
