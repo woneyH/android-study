@@ -102,6 +102,73 @@ class MainActivity : AppCompatActivity() {
 결론은 x, y는 특정 뷰를 기준에서의 좌표 값  rawX, rawY는 화면 전체 기준에서 눌린 좌표값입니다.
 
 
+
+### 키 이벤트
+
+키 이벤트를 처리하려면 다음과 같은 콜백 함수들을 오버라이딩 해야 합니다.
+
+- **onKeyDown** : 키를 누른 순간의 이벤트
+- **onKeyUp** : 키를 떼는 순간의 이벤트
+- **onKeyLongPress** : 키를 오래 누르는 순간의 이벤트
+
+일반적인 소프트 키보드(자판)에 대한 키 이벤트 처리가 아닙니다.
+
+해당 키 이벤트는 하드웨어 키보드 키를 입력하면 키 이벤트로 처리할 수 있습니다.
+
+하드웨어 키보드는 뒤로 가기, 홈, 볼륨 조절 버튼 등이 존재합니다.
+
+오버뷰 버튼과 전원 버튼을 눌러도  **onKeyDown 함수는 호출되지 않습니다.**
+
+
+<br>
+
+```kotlin
+override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d("key-event", "키보드 눌림")
+        when (keyCode) {
+            KeyEvent.KEYCODE_BACK -> Log.d("key-action-event", "예전 뒤로가기 버튼 이벤트 호출")
+            KeyEvent.KEYCODE_VOLUME_UP -> Log.d("key-action-event", "볼륨 업 버튼 눌림")
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d("key-event","키보드 땜")
+        return super.onKeyUp(keyCode, event)
+    }
+```
+
+<br>
+
+**KEYCODE_BACK**  뒤로 가기 버튼 이벤트는  뒤에 onKeyDown, onKeyUp 함수를 이용하면 안 됩니다. 
+
+최근 Android 13 부터는 **예측형 뒤로 가기** 애니메이션이 도입되었습니다.
+구글은 개발자에게 onKeyDown이나 onKeyUp, onBackPressed() 같은 함수들을 사용하여 뒤로 가기 버튼 이벤트 처리를 하지 말라고 했습니다.
+
+**최신 방식인 onBackPressedDispatcher.addCallBack()를 활용해야합니다.**
+
+하단 코드처럼 onCreate 함수안에서 콜백함수 호출을 해야합니다.
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.test_ex6)
+
+        onBackPressedDispatcher.addCallback(this,object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("key-event","최신식 뒤로가기 버튼 눌림")
+
+            }
+        })
+    }
+```
+<img width="1747" height="211" alt="image" src="https://github.com/user-attachments/assets/82df8071-67e0-436d-bc3f-25fb39275949" />
+
+위 코드대로 뒤로 가기 버튼 이벤트를 처리하면 앱이 안 나가질 수 있습니다.
+추가로 하단 코드를 작성하면 앱에서 나갈 수 있습니다.
+
+
+
 ---
 
 <br>
