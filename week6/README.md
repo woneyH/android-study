@@ -1,6 +1,6 @@
 # 학습 목표
 
-- [ ] 터치와 키 이벤트
+- [X] 터치와 키 이벤트
 - [ ] 널 안전성
 
 
@@ -150,23 +150,23 @@ override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 하단 코드처럼 onCreate 함수안에서 콜백함수 호출을 해야합니다.
 
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
+class MainActivity2 : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_ex6)
-
-        onBackPressedDispatcher.addCallback(this,object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                Log.d("key-event","최신식 뒤로가기 버튼 눌림")
-
-            }
-        })
+        onBackPressedDispatcher.addCallback(this,c)
     }
+
+    private val c = Child()
+}
+
+class Child: OnBackPressedCallback(true) {
+    override fun handleOnBackPressed() {
+        Log.d("뒤로가기 버튼 ","버튼이 눌림")
+    }
+}
 ```
 <img width="1747" height="211" alt="image" src="https://github.com/user-attachments/assets/82df8071-67e0-436d-bc3f-25fb39275949" />
-
-위 코드대로 뒤로 가기 버튼 이벤트를 처리하면 앱이 안 나가질 수 있습니다.
-추가로 하단 코드를 작성하면 앱에서 나갈 수 있습니다.
-
 
 
 ---
