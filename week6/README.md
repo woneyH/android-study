@@ -1,7 +1,7 @@
 # 학습 목표
 
 - [X] 터치와 키 이벤트
-- [ ] 널 안전성
+- [X] 널 안전성
 
 
 
@@ -174,3 +174,73 @@ class Child: OnBackPressedCallback(true) {
 <br>
 
 ## 2. 널 안전성
+
+코틀린은 NPE에 대한 유연하고 방어적인 프로그래밍이 가능합니다.
+
+널 안전성을 활용해 널 포인트 예외가 발생하지 않도록 코드를 작성할 수 있습니다.
+
+코틀린은 기본적으로 모든 변수에 null을 허용하지 않습니다. 만약 변수에 null을 담고 싶다면 타입 뒤에 물음표를 붙여 명시적으로 Nullable 타입으로 선언하면 됩니다.
+
+### 2-1 Nullable 타입과 Non-Nullable 타입
+
+**Non-Nullable type (default)**: null을 넣으려 하면 컴파일 에러 발생합니다.
+```kotlin
+ var a: String = "TEST"
+ // a = null  //컴파일 에러 발생!
+```
+
+**Nullable 타입** : 타입 뒤에 **?** 를 붙여 null을 허용합니다.
+```kotlin
+var a: String? = "TEST"
+a = null //정상 동작 에러X
+```
+
+
+### 2-2 Safe Call Operator  (?. 연산자)
+
+Nullable타입이라면 해당 변수에 null일 가능성이 존재하는 변수인 것 입니다.
+따라서 언제든 NPE(Null Point Exception)이 발생할 수 있습니다.
+이때 NPE방지를 위해 안전한 호출 연산자가 존재합니다.
+
+**?.** 연산자를 사용하면 안전하게 객체의 프로퍼티나 메서드에 접근할 수 있습니다.
+
+```kotlin
+val name: String? = "kim"
+println(name.length)  //에러 발생
+```
+
+위 코드처럼 널 허용으로 선언한 변수의 멤버에 접근할 때는 반드시 **?. 연산자를 사용해야 합니다.**
+
+```kotlin
+val name: String? = "kim"
+println(name?.length)
+```
+
+Safe Call을 더 자세히 말하면 객체가 null이면 null을 반환하고 null이 아니면 멤버에 대한 접근을 합니다.  NPE를 발생시키지 않습니다.
+
+### 2-3 Elvis Operator (?: 연산자)
+
+변수가 null 일 때 null 대신 사용할 기본값을 지정하고 싶을 때 사용합니다.
+
+**?:** 기준 왼쪽의 결과가 null이 아니면 그 값을 그대로 사용하고, null이면 오른쪽 값을 반환합니다.
+
+```kotlin
+val test: String? = null
+println(test?.length ?: 0) //null 이므로 0을 출력하게 됩니다. 
+```
+
+
+### 2-4 Not-null Assertion Null 아님 단언 연산자  (!!)
+
+어떤 변수가 **절대 null이 아님**을 개발자가 컴파일러에게 강제로 보장하는 연산자입니다.
+
+- 이 연산자를 쓰면 Nullable 타입을 Non-Nullable 타입으로 강제 변환합니다.
+- 만약 실제 값이 null이면 NPE가 발생하므로 가급적 사용을 피하는게 좋습니다.
+
+```kotlin
+val name: String? = "Kotlin"
+val length: Int = name!!.length //name이 절대 null아 아니라고 단언함
+
+val name2: String? = null
+val length2: Int = name!!.length //NullPointException 발생
+```
